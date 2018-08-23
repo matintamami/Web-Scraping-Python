@@ -91,7 +91,7 @@ if soup.find('li', attrs={'class': 'c-pagination__item'}):
                         "comment_desc": comment
                     }
                     comment_list.append(comment_data)
-    print(len(comment_list))
+    print(comment_list)
 
     # print(page_count)
     #Create the result
@@ -103,5 +103,18 @@ if soup.find('li', attrs={'class': 'c-pagination__item'}):
     # print(page)
     # print(len(result))
 #
-# else:
-#     result = soup.find_all('li', attrs={'class': 'c-list-ui__item js-review-item'})
+else:
+    result = soup.find_all('li', attrs={'class': 'c-list-ui__item js-review-item'})
+    for data in result:
+        author = data.find('span', attrs={'class': 'u-txt--small u-display-inline-block u-mrgn-right--1'}).text
+        date = data.find('span', attrs={'class': 'u-txt--small u-display-inline-block qa-product-review-date'}).text
+        title = data.find('p', attrs={'class': 'u-mrgn-bottom--0 u-mrgn-top--2 u-txt--bold u-fg--black'}).text
+        comment = data.find('p', attrs={'class': 'u-mrgn-bottom--2 u-txt--break-word u-fg--black qa-product-review-content'}).text
+        comment_data = {
+            "author": author.replace("Oleh ", ""),
+            "date": date.split(',')[0],
+            "comment_title": title,
+            "comment_desc": comment
+        }
+        comment_list.append(comment_data)
+    print(comment_list)
